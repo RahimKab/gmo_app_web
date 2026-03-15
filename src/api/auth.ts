@@ -7,7 +7,8 @@ export type AuthResponse = {
 }
 
 type LoginRequestPayload = {
-  email: string
+  username?: string
+  email?: string
   password: string
 }
 
@@ -30,7 +31,7 @@ function normalizePath(path: string): string {
 const LOGIN_PATH = normalizePath(import.meta.env.VITE_LOGIN_PATH ?? '/auth/login/')
 const REGISTER_PATH = normalizePath(import.meta.env.VITE_REGISTER_PATH ?? '/auth/register/')
 
-export async function loginWithEmail(payload: LoginRequestPayload): Promise<AuthResponse> {
+export async function loginWithIdentifier(payload: LoginRequestPayload): Promise<AuthResponse> {
   return apiPost<AuthResponse, LoginRequestPayload>(LOGIN_PATH, payload)
 }
 

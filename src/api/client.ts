@@ -5,7 +5,7 @@ type ApiErrorPayload = {
 
 type RequestOptions = {
   method: 'GET' | 'POST'
-  body?: unknown
+  body?: Record<string, unknown> | FormData
 }
 
 const TOKEN_KEY = 'auth_token'
@@ -70,15 +70,24 @@ async function readErrorMessage(response: Response, fallback: string): Promise<s
 
 async function apiRequest<T>(path: string, options: RequestOptions): Promise<T> {
   const token = getToken()
+  const isFormDataPayload = options.body instanceof FormData
+  let requestBody: BodyInit | undefined
+
+  if (options.body instanceof FormData) {
+    requestBody = options.body
+  } else if (options.body) {
+    requestBody = JSON.stringify(options.body)
+  }
+
   const response = await fetch(buildUrl(path), {
     method: options.method,
     credentials: 'include',
     headers: {
       Accept: 'application/json',
       ...(token ? { Authorization: `Token ${token}` } : {}),
-      ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+      ...(options.body && !isFormDataPayload ? { 'Content-Type': 'application/json' } : {}),
     },
-    ...(options.body ? { body: JSON.stringify(options.body) } : {}),
+    ...(requestBody ? { body: requestBody } : {}),
   })
 
   const contentType = response.headers.get('content-type') ?? ''
@@ -114,6 +123,13 @@ export async function apiPost<TResponse, TBody>(
   path: string,
   body: TBody,
 ): Promise<TResponse> {
+  return apiRequest<TResponse>(path, {
+    method: 'POST',
+    body: body as Record<string, unknown>,
+  })
+}
+
+export async function apiPostForm<TResponse>(path: string, body: FormData): Promise<TResponse> {
   return apiRequest<TResponse>(path, {
     method: 'POST',
     body,

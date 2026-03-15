@@ -7,7 +7,7 @@ type BackendStatus = 'checking' | 'online' | 'offline'
 
 export function HomePage() {
   const [backendStatus, setBackendStatus] = useState<BackendStatus>('checking')
-  const [backendMessage, setBackendMessage] = useState('Verification du statut du backend...')
+  const [backendMessage, setBackendMessage] = useState('Vérification du statut du backend...')
 
   useEffect(() => {
     let isMounted = true
@@ -29,8 +29,8 @@ export function HomePage() {
 
         const message =
           error instanceof ApiError
-            ? `${error.message} (HTTP ${error.status})`
-            : 'Impossible de joindre le backend Django.'
+            ? `${error.message}`
+            : 'API inaccessible, VERIFEZ VOTRE CONNEXION.'
 
         setBackendStatus('offline')
         setBackendMessage(message)
@@ -45,26 +45,93 @@ export function HomePage() {
   }, [])
 
   return (
-    <section>
-      <h2>Routage et connexion backend prets</h2>
-      <p>
-        Ce projet utilise desormais des routes imbriquees avec un layout partage,
-        ce qui facilite l'ajout de nouveaux modules a mesure que l'application evolue.
-      </p>
+    <section className="home">
+      <article className="home-hero">
+        <div className="hero-copy">
+          <span className="badge">[ SYS // DETECTION OGM ]</span>
+          <p className="hero-sys-tag">ADN-ANALYTICS v0.0 &mdash; PLATEFORME DE DIAGNOSTIC</p>
+          <h2>
+            Centre de commande <span className="hero-highlight">ADN</span> &mdash;
+            decisions rapides, tracables et pretes au rapport.
+          </h2>
+          
+          <div className="hero-actions">
+            <Link to="/samples" className="action-link">
+              &rsaquo;&rsaquo; Lancer un diagnostic
+            </Link>
+            <Link to="/reports" className="action-link action-link--secondary">
+              &rsaquo;&rsaquo; Consulter les rapports
+            </Link>
+          </div>
+          <div className="hero-stats">
+            <div className="hero-stat">
+              <strong>85.4%</strong>
+              <span>PRECISION</span>
+            </div>
+            <div className="hero-stat">
+              <strong>20.8s</strong>
+              <span>LATENCE</span>
+            </div>
+            <div className="hero-stat">
+              <strong>PDF</strong>
+              <span>RAPPORT AUTO</span>
+            </div>
+          </div>
+        </div>
 
-      <div className={`status-card status-card--${backendStatus}`}>
-        <h3>Django API</h3>
-        <p>{backendMessage}</p>
-      </div>
+        <aside className="hero-visual">
+          <div className="helix" aria-hidden="true">
+            <span className="helix__rung" />
+            <span className="helix__rung" />
+            <span className="helix__rung" />
+            <span className="helix__rung" />
+            <span className="helix__rung" />
+            <span className="helix__rung" />
+            <span className="helix__rung" />
+            <span className="helix__rung" />
+            <div className="helix__scan" aria-hidden="true" />
+          </div>
+          <div className="hero-telemetry">
+            <p>
+              <span>&#9658; API</span>
+              <strong className={`tele-status tele-status--${backendStatus}`}>
+                {backendStatus === 'online'
+                  ? '● EN LIGNE'
+                  : backendStatus === 'offline'
+                    ? '✗ HORS LIGNE'
+                    : '◯ VERIFICATION...'}
+              </strong>
+            </p>
+            <p>
+              <span>&#9658; MODELE</span>
+              <strong>OGM / NON-OGM</strong>
+            </p>
+            <p>
+              <span>&#9658; SORTIE</span>
+              <strong>RAPPORT PDF + ATTENTION</strong>
+            </p>
+          </div>
+        </aside>
+      </article>
 
-      <div className="quick-links">
-        <Link to="/samples" className="action-link">
-          Aller aux echantillons
-        </Link>
-        <Link to="/reports" className="action-link action-link--secondary">
-          Aller aux rapports
-        </Link>
-      </div>
+      <section className="feature-grid">
+        <article className="feature-card feature-card--accent">
+          <span className="fcard-index">[01] INGESTION</span>
+          <h3>Import des sequences</h3>
+          <p>Deposez FASTA/FNA/TXT ou collez une sequence brute, puis lancez l&apos;analyse.</p>
+        </article>
+        <article className="feature-card feature-card--accent">
+          <span className="fcard-index">[02] INFERENCE</span>
+          <h3>Diagnostic intelligent</h3>
+          <p>Le modele calcule les probabilites OGM/Non-OGM et detecte les zones d&apos;attention.</p>
+        </article>
+        <article className="feature-card feature-card--accent">
+          <span className="fcard-index">[03] RAPPORT</span>
+          <h3>Rapport exploitable</h3>
+          <p>Chaque prediction est conservee avec un PDF.</p>
+        </article>
+      </section>
+
     </section>
   )
 }

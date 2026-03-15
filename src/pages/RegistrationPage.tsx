@@ -90,7 +90,7 @@ export function RegistrationPage() {
               required
               value={fields.nom}
               onChange={(event) => updateField('nom', event.target.value)}
-              placeholder="Dupont"
+              placeholder="TRAORE"
             />
           </label>
 
@@ -103,7 +103,7 @@ export function RegistrationPage() {
               required
               value={fields.prenom}
               onChange={(event) => updateField('prenom', event.target.value)}
-              placeholder="Alice"
+              placeholder="Korotimi"
             />
           </label>
 
@@ -116,7 +116,7 @@ export function RegistrationPage() {
               required
               value={fields.username}
               onChange={(event) => updateField('username', event.target.value)}
-              placeholder="alice.dupont"
+              placeholder="Koro.traore"
             />
           </label>
 
@@ -130,7 +130,7 @@ export function RegistrationPage() {
               required
               value={fields.email}
               onChange={(event) => updateField('email', event.target.value)}
-              placeholder="alice@laboratoire.fr"
+              placeholder="koro@laboratoire.fr"
             />
           </label>
 

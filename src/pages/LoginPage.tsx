@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { loginWithEmail } from '../api/auth'
+import { loginWithIdentifier } from '../api/auth'
 import { ApiError } from '../api/client'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -10,7 +10,7 @@ type LoginState = 'idle' | 'submitting'
 export function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
-  const [email, setEmail] = useState('')
+  const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberMe] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
@@ -20,8 +20,9 @@ export function LoginPage() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault()
 
-    if (!email.trim() || !password.trim()) {
-      setErrorMessage('Email et Mot de passe sont requis.')
+    const loginValue = identifier.trim()
+    if (!loginValue || !password.trim()) {
+      setErrorMessage("Nom d'utilisateur ou email et mot de passe sont requis.")
       return
     }
 
@@ -29,13 +30,16 @@ export function LoginPage() {
     setLoginState('submitting')
 
     try {
-      const { token, user } = await loginWithEmail({ email: email.trim(), password })
+      const payload = loginValue.includes('@')
+        ? { email: loginValue, password }
+        : { username: loginValue, password }
+      const { token, user } = await loginWithIdentifier(payload)
       login(token, user, rememberMe)
       navigate('/', { replace: true })
     } catch (error) {
       const message =
         error instanceof ApiError
-          ? `${error.message})`
+          ? `${error.message}`
           : 'Impossible de se connecter au backend.'
 
       setErrorMessage(message)
@@ -49,21 +53,21 @@ export function LoginPage() {
 
       <main className="login-card" aria-labelledby="login-title">
         <p className="login-card__kicker">Acces securise</p>
-        <h1 id="login-title">Connexion a GMO Detection</h1>
+        <h1 id="login-title">Connexion</h1>
         <p className="login-card__subtitle">
           Utilisez votre compte laboratoire pour acceder aux echantillons et aux rapports.
         </p>
 
         <form className="login-form" onSubmit={handleSubmit} noValidate>
-          <label className="field" htmlFor="email">
-            <span>Email</span>
+          <label className="field" htmlFor="identifier">
+            <span>Nom d'utilisateur ou email</span>
             <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="lab.analyst@domain.tld"
+              id="identifier"
+              type="text"
+              autoComplete="username"
+              value={identifier}
+              onChange={(event) => setIdentifier(event.target.value)}
+              placeholder="alice ou lab.analyst@domain.org"
             />
           </label>
 
@@ -98,9 +102,9 @@ export function LoginPage() {
               />
               <span>Se souvenir de moi</span>
             </label>
-            <a href="#" className="forgot-link" onClick={(event) => event.preventDefault()}>
+            {/* <a href="#" className="forgot-link" onClick={(event) => event.preventDefault()}>
               Mot de passe oublie ?
-            </a>
+            </a> */}
           </div>
 
           {errorMessage ? (

@@ -1,0 +1,6 @@
+name: gmo-frontend
+channels:
+  - conda-forge
+dependencies:
+  - nodejs=20
+  - npm=10
