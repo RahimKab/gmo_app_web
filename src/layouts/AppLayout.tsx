@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext'
 
 const navLinks = [
   { to: '/', label: 'Acceuil', end: true },
-  { to: '/samples', label: 'Diagnostique' },
+  { to: '/diagnostique', label: 'Diagnostique' },
   { to: '/reports', label: 'Rapports' },
 ]
 

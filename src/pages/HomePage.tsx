@@ -56,7 +56,7 @@ export function HomePage() {
           </h2>
           
           <div className="hero-actions">
-            <Link to="/samples" className="action-link">
+            <Link to="/diagnostique" className="action-link">
               &rsaquo;&rsaquo; Lancer un diagnostic
             </Link>
             <Link to="/reports" className="action-link action-link--secondary">

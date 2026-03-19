@@ -35,7 +35,7 @@ function formatLabel(label: 'gmo' | 'no-gmo'): string {
   return label === 'gmo' ? 'GMO' : 'Non-GMO'
 }
 
-export function SamplesPage() {
+export function DiagnostiquePage() {
   const [inputMode, setInputMode] = useState<InputMode>('raw')
   const [seqNom, setSeqNom] = useState('')
   const [seqNomCourant, setSeqNomCourant] = useState('')
