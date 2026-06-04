@@ -258,7 +258,7 @@ export function DiagnostiquePage() {
               <div className="result-hero-meta">
                 <div className="result-metric-card">
                   <span>Seuil GMO</span>
-                  <strong>50.0%</strong>
+                  <strong>40.0%</strong>
                 </div>
                 <div className="result-metric-card">
                   <span>Probabilite GMO</span>
@@ -292,7 +292,7 @@ export function DiagnostiquePage() {
             <article className="panel-card probability-panel">
               <h3>Probabilites par label</h3>
               <p className="result-panel-intro">
-                Lecture directe des scores renvoyes par le backend pour chaque classe.
+                Probabilité pour chaque classe.
               </p>
               <div className="probability-list">
                 {probabilityCards.map((item) => (
@@ -305,7 +305,7 @@ export function DiagnostiquePage() {
                       <div className="probability-meter__threshold" style={{ left: '80%' }} />
                       <div className={item.className} style={{ width: `${item.value * 100}%` }} />
                     </div>
-                    <span className="probability-meter__hint">Seuil GMO: 50%</span>
+                    {/* <span className="probability-meter__hint">Seuil OGM: 40%</span> */}
                   </div>
                 ))}
               </div>
@@ -313,9 +313,12 @@ export function DiagnostiquePage() {
 
             <article className="panel-card attention-panel">
               <h3>Attention sur la sequence</h3>
-              <p>
+              {/* <p>
                 Les segments avec le score le plus eleve indiquent les zones qui ont le plus pese
                 dans la prediction.
+              </p> */}
+              <p>
+                Segment principale.
               </p>
               {topAttention ? (
                 <div className="attention-hero">

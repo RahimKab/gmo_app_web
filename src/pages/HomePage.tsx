@@ -65,11 +65,11 @@ export function HomePage() {
           </div>
           <div className="hero-stats">
             <div className="hero-stat">
-              <strong>85.4%</strong>
+              <strong>89.6%</strong>
               <span>PRECISION</span>
             </div>
             <div className="hero-stat">
-              <strong>20.8s</strong>
+              <strong>10s</strong>
               <span>LATENCE</span>
             </div>
             <div className="hero-stat">
