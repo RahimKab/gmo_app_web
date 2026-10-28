@@ -1,29 +1,8 @@
-import { createContext, useContext, useState } from 'react'
+import { useState } from 'react'
 import type { ReactNode } from 'react'
+import { AuthContext } from './authContext'
 
-export type AuthRole = {
-  role_id: number
-  role_code: string
-  role_nom: string
-}
-
-export type AuthUser = {
-  user_id: number
-  nom: string
-  prenom: string
-  username: string
-  email: string
-  user_actif: boolean
-  role: AuthRole | null
-}
-
-type AuthContextValue = {
-  user: AuthUser | null
-  token: string | null
-  isAuthenticated: boolean
-  login: (token: string, user: AuthUser, remember: boolean) => void
-  logout: () => void
-}
+import type { AuthUser } from './authContext'
 
 const TOKEN_KEY = 'auth_token'
 const USER_KEY = 'auth_user'
@@ -34,8 +13,6 @@ function readStorage(): { token: string | null; user: AuthUser | null } {
   const user = raw ? (JSON.parse(raw) as AuthUser) : null
   return { token, user }
 }
-
-const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const stored = readStorage()
@@ -64,10 +41,4 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       {children}
     </AuthContext.Provider>
   )
-}
-
-export function useAuth(): AuthContextValue {
-  const ctx = useContext(AuthContext)
-  if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>')
-  return ctx
 }

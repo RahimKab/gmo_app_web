@@ -40,6 +40,11 @@ export type SequencePredictionResponse = {
   chunks_processed: number
 }
 
+export type SequencePredictionBatchResponse = {
+  count: number
+  results: SequencePredictionResponse[]
+}
+
 export type ReportRecord = {
   report_id: number
   predicted_label: string
@@ -89,7 +94,7 @@ export type DiagnosticFormPayload = {
 
 export async function submitDiagnosticForm(
   payload: DiagnosticFormPayload,
-): Promise<SequencePredictionResponse> {
+): Promise<SequencePredictionBatchResponse> {
   const formData = new FormData()
   formData.append('seq_nom', payload.seq_nom)
   formData.append('seq_nom_courant', payload.seq_nom_courant)
@@ -99,7 +104,7 @@ export async function submitDiagnosticForm(
     formData.append('file', payload.file)
   }
 
-  return apiPostForm<SequencePredictionResponse>(DIAGNOSTICS_PATH, formData)
+  return apiPostForm<SequencePredictionBatchResponse>(DIAGNOSTICS_PATH, formData)
 }
 
 export async function fetchUserReports(): Promise<UserPredictionSummary[]> {

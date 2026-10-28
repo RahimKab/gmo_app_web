@@ -3,7 +3,7 @@ import type { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { loginWithIdentifier } from '../api/auth'
 import { ApiError } from '../api/client'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../contexts/useAuth'
 
 type LoginState = 'idle' | 'submitting'
 

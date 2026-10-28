@@ -65,7 +65,7 @@ export function HomePage() {
           </div>
           <div className="hero-stats">
             <div className="hero-stat">
-              <strong>89.6%</strong>
+              <strong>99%</strong>
               <span>PRECISION</span>
             </div>
             <div className="hero-stat">
@@ -94,7 +94,7 @@ export function HomePage() {
           <div className="hero-telemetry">
             <p>
               <span>&#9658; API</span>
-              <strong className={`tele-status tele-status--${backendStatus}`}>
+              <strong className={`tele-status tele-status--${backendStatus}`} title={backendMessage}>
                 {backendStatus === 'online'
                   ? '● EN LIGNE'
                   : backendStatus === 'offline'

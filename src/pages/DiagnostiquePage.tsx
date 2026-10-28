@@ -90,9 +90,18 @@ export function DiagnostiquePage() {
         file: inputMode === 'file' ? selectedFile : null,
       })
 
-      const sequenceName = response.sequence.seq_nom_courant || response.sequence.seq_nom || selectedFile?.name || seqNomCourant
-      setResult(response)
-      setSuccessMessage(`Diagnostic traite avec succes: ${sequenceName}.`)
+      const firstResult = response.results[0]
+      if (!firstResult) {
+        throw new Error('L\'API n\'a retourne aucune prediction.')
+      }
+
+      const sequenceName = firstResult.sequence.seq_nom_courant || firstResult.sequence.seq_nom || selectedFile?.name || seqNomCourant
+      setResult(firstResult)
+      setSuccessMessage(
+        response.count > 1
+          ? `${response.count} sequences traitees avec succes. Premiere sequence: ${sequenceName}.`
+          : `Diagnostic traite avec succes: ${sequenceName}.`,
+      )
     } catch (error) {
       const message =
         error instanceof ApiError

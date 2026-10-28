@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
 import App from '../App'
 import { AppLayout } from '../layouts/AppLayout'
 import { HomePage } from '../pages/HomePage'
@@ -7,12 +7,7 @@ import { ReportsPage } from '../pages/ReportsPage'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { LoginPage } from '../pages/LoginPage'
 import { RegistrationPage } from '../pages/RegistrationPage'
-import { useAuth } from '../contexts/AuthContext'
-
-function RequireAuth() {
-  const { isAuthenticated } = useAuth()
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />
-}
+import { RequireAuth } from './RequireAuth'
 
 export const router = createBrowserRouter([
   {

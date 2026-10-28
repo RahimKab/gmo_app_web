@@ -1,5 +1,5 @@
 import { apiPost } from './client'
-import type { AuthUser } from '../contexts/AuthContext'
+import type { AuthUser } from '../contexts/authContext'
 
 export type AuthResponse = {
   token: string
