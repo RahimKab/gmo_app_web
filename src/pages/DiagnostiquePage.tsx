@@ -267,7 +267,7 @@ export function DiagnostiquePage() {
               <div className="result-hero-meta">
                 <div className="result-metric-card">
                   <span>Seuil GMO</span>
-                  <strong>40.0%</strong>
+                  <strong>95.0%</strong>
                 </div>
                 <div className="result-metric-card">
                   <span>Probabilite GMO</span>
@@ -321,13 +321,9 @@ export function DiagnostiquePage() {
             </article>
 
             <article className="panel-card attention-panel">
-              <h3>Attention sur la sequence</h3>
-              {/* <p>
-                Les segments avec le score le plus eleve indiquent les zones qui ont le plus pese
-                dans la prediction.
-              </p> */}
+              <h3>Explicabilite par occlusion</h3>
               <p>
-                Segment principale.
+                L&apos;impact mesure la variation reelle de la probabilite GMO quand le segment est masque.
               </p>
               {topAttention ? (
                 <div className="attention-hero">
@@ -335,7 +331,9 @@ export function DiagnostiquePage() {
                   <strong>
                     {topAttention.start} - {topAttention.end}
                   </strong>
-                  <span className="attention-hero__score">Impact {formatPercent(topAttention.score)}</span>
+                  <span className="attention-hero__score">
+                    Impact {formatPercent(topAttention.impact ?? topAttention.score)}
+                  </span>
                   <code>{topAttention.sequence}</code>
                 </div>
               ) : null}
@@ -343,13 +341,13 @@ export function DiagnostiquePage() {
           </div>
 
           <article className="panel-card attention-table-card">
-            <h3>Cartographie des segments</h3>
+            <h3>Cartographie des segments influents</h3>
             <div className="attention-list">
               {result.attention.map((segment, index) => (
                 <div key={`${segment.start}-${segment.end}-${index}`} className="attention-item">
                   <div className="attention-item__meta">
                     <span>Segment {index + 1}</span>
-                    <strong>{formatPercent(segment.score)}</strong>
+                    <strong>{formatPercent(segment.impact ?? segment.score)}</strong>
                   </div>
                   <div className="attention-item__track">
                     <div className="attention-item__fill" style={{ width: `${segment.score * 100}%` }} />

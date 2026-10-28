@@ -5,6 +5,7 @@ export type AttentionSegment = {
   end: number
   sequence: string
   score: number
+  impact?: number
 }
 
 export type SequenceRecord = {
